@@ -1,0 +1,108 @@
+services:
+  # 1. СУБД PostgreSQL (Использует psycopg3 на стороне бэкенда)
+  profile_db:
+    image: postgres:16-alpine
+    container_name: profile_db
+    restart: always
+    volumes:
+      - profile_postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    expose: # порт скрыт внутри сети Docker, внешнего подключения нет
+      - "5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. Брокер сообщений и кэш Redis
+  profile_redis:
+    image: redis:7-alpine
+    container_name: profile_redis
+    restart: always
+    command: redis-server --appendonly yes
+    volumes:
+      - profile_redis_data:/data
+    expose: # порт скрыт внутри сети Docker, внешнего подключения нет
+      - "6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # 3. Бэкенд Django + Gunicorn (Python 3.14)
+  backend:
+    build: .
+    container_name: profile_backend
+    restart: always
+    # Запускаем Gunicorn с 3 параллельными процессами-воркерами
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3
+    volumes:
+      - .:/app
+      - backend_static:/app/backend_static # Путь совпадает со STATIC_ROOT
+      - media_data:/app/media
+    expose:
+      - "8000" # Порт скрыт внутри сети Docker, наружу на сервер его пробросит Nginx
+    env_file:
+      - .env
+    depends_on:
+      profile_db:
+        condition: service_healthy # Ждем, пока БД будет полностью готова принимать соединения
+      profile_redis:
+        condition: service_healthy # Ждем, пока Redis начнет отвечать на ping
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - default
+      - web_network
+
+  # 4. Асинхронный фоновый воркер Celery (Использует тот же образ Python 3.14)
+  celery_worker:
+    build: .
+    container_name: profile_celery_worker
+    restart: always
+    command: celery -A config worker --loglevel=info
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    environment:
+      - CELERY_BROKER_URL=redis://profile_redis:6379/0
+    depends_on:
+      profile_db:
+        condition: service_healthy
+      profile_redis:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+
+  # 5. Веб-сервер Nginx (Проксирует запросы на Gunicorn и мгновенно раздает статику)
+  nginx:
+    image: nginx:stable-alpine
+    restart: always
+    ports:
+      - "80:80" # Занимаем стандартный порт
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+      # Монтируем локальный Bootstrap в отдельную изолированную папку фронтенда для Nginx
+      - ./static:/usr/share/nginx/html/static:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - backend_static:/app/backend_static:ro
+      - media_data:/app/media:ro
+    depends_on:
+      - backend
+
+volumes:
+  profile_postgres_data:
+  profile_redis_data:
+  backend_static:
+  media_data:
+
+networks:
+  web_network:
+    external: true

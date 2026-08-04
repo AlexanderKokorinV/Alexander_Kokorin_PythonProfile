@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alexander Kokorin | Python Developer</title>
+    <!-- 1. Подключаем локальный Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <!-- Подключаем иконки Bootstrap Icons -->
+    <link rel="stylesheet" href="static/css/bootstrap-icons.css">
+    <!-- 3. Локальный шрифт флагов для Windows (ИСПРАВЛЕНО НА ЛОКАЛЬНЫЙ ПУТЬ) -->
+    <link rel="stylesheet" href="static/css/flags-polyfill.css">
+    <!-- Кастомные стили -->
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body class="bg-light">
+
+    <!-- НАВИГАЦИЯ (Navbar) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-uppercase tracking-wider" href="#">AK.dev</a>
+            <button class="navbar-expand-lg navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav gap-2">
+                    <li class="nav-item"><a class="nav-link active" href="#hero" data-translate="nav-home">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about" data-translate="nav-about">Обо мне</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills" data-translate="nav-stack">Стек</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects" data-translate="nav-projects">Проекты</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacts" data-translate="nav-contacts">Контакты</a></li>
+                <div class="ms-auto d-flex align-items-center">
+                    <button id="lang-btn" class="btn btn-outline-light btn-sm fw-bold d-flex align-items-center">
+                        <span id="lang-flag" class="me-1">🇬🇧</span>
+                        <span id="lang-text">EN</span>
+                    </button>
+                </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- БЛОК 1: ГЛАВНАЯ (Hero Section) -->
+    <section id="hero">
+        <div class="container text-center py-5">
+            <h1 id="hero-name" class="display-3 fw-bold text-white mb-2">Загрузка...</h1>
+            <p id="hero-title" class="lead text-white fs-3 mb-4">Python Backend Developer</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#about" class="btn btn-primary btn-lg px-4 shadow" data-translate="btn-more">Узнать больше</a>
+                <a href="#contacts" class="btn btn-outline-light btn-lg px-4" data-translate="btn-connect">Связаться</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- БЛОК 2: ОБО МНЕ -->
+    <section id="about" class="py-5 bg-white">
+        <div class="container py-4">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-4 text-center">
+                    <!-- Заглушка для аватара, путь заменится на медиа-файл из Django -->
+                    <img id="about-avatar" src="https://placeholder.com" class="img-fluid rounded-circle shadow-lg border border-5 border-light" alt="Александр Кокорин" style="width: 280px; height: 280px; object-fit: cover;">
+                </div>
+                <div class="col-lg-8">
+                    <h2 class="fw-bold mb-4 border-bottom pb-2 text-dark" data-translate="section-about">Обо мне</h2>
+                    <p id="about-text" class="text-secondary fs-5 lh-base">Загрузка информации...</p>
+                    <div class="row g-3 mt-3">
+                        <!-- Левая колонка (Локация) -->
+                        <div class="col-12 col-md-6">
+                            <p class="mb-0">
+                                📍 <span data-translate="label-location">Локация:</span>
+                                <!-- Обернули значение в span -->
+                                <span data-translate="val-location">Москва</span>
+                            </p>
+                        </div>
+                        <!-- Правая колонка (Образование) -->
+                        <div class="col-12 col-md-6">
+                            <p class="mb-0">
+                                🎓 <span data-translate="label-education">Образование:</span>
+                                <!-- Обернули значение в span -->
+                                <span data-translate="val-education">МГТУ им. Н.Э. Баумана</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- БЛОК 3: МОЙ СТЕК -->
+    <section id="skills" class="py-5 bg-light">
+        <div class="container py-4">
+            <h2 class="text-center fw-bold mb-5 text-dark" data-translate="section-skills">Технический стек и навыки</h2>
+            <div id="skills-container" class="row row-cols-1 row-cols-md-2 g-4 max-width-md mx-auto" style="max-width: 900px;">
+                <!-- Сюда JavaScript динамически вставит прогресс-бары -->
+                <div class="text-center w-100 text-muted">Загрузка навыков...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- БЛОК 4: ПРОЕКТЫ -->
+    <section id="projects" class="py-5 bg-white">
+        <div class="container py-4">
+            <h2 class="text-center fw-bold mb-5 text-dark" data-translate="section-projects">Портфолио проектов</h2>
+            <div id="projects-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <!-- Сюда JavaScript динамически вставит карточки проектов -->
+                <div class="text-center w-100 text-muted">Загрузка проектов...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- БЛОК 5: КОНТАКТЫ -->
+    <section id="contacts" class="py-5 bg-dark text-white text-center">
+        <div class="container py-4">
+            <h2 class="fw-bold mb-4" data-translate="section-contacts">Контакты для связи</h2>
+            <p class="text-muted mb-5 fs-5">Открыт к предложениям и готов выполнить тестовое задание</p>
+            <div class="d-flex flex-wrap justify-content-center gap-4 fs-5">
+                <a id="contact-phone" href="#" class="text-decoration-none text-white link-primary"><i class="bi bi-telephone-fill me-2"></i>Телефон</a>
+                <a id="contact-telegram" href="#" target="_blank" class="text-decoration-none text-white link-primary"><i class="bi bi-telegram me-2"></i>Telegram</a>
+                <a id="contact-email" href="#" class="text-decoration-none text-white link-primary"><i class="bi bi-envelope-fill me-2"></i>Email</a>
+                <a id="contact-github" href="#" target="_blank" class="text-decoration-none text-white link-primary"><i class="bi bi-github me-2"></i>GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ПОДВАЛ (Footer) -->
+    <footer class="bg-black text-center text-white py-3 border-top border-secondary">
+        <div class="container">
+            <small data-translate="footer-text">© 2026 Александр Кокорин. Деплой автоматизирован через GitHub Actions в Yandex Cloud.</small>
+        </div>
+    </footer>
+
+    <!-- Подключаем скрипты Bootstrap 5 JS -->
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+    <!-- Логика Fetch API для связи с Django -->
+    <script src="static/js/app.js"></script>
+</body>
+</html>

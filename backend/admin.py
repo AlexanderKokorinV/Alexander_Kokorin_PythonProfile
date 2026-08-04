@@ -1,15 +1,18 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
 from .models import Profile, Skill, Project
 
+
 @admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('name', 'title', 'email')
+class ProfileAdmin(TranslationAdmin):
+    pass
+
 
 @admin.register(Skill)
-class SkillAdmin(admin.ModelAdmin):
-    list_display = ('name', 'level')
-    ordering = ('-level',)
+class SkillAdmin(TranslationAdmin):
+    pass
+
 
 @admin.register(Project)
-class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('title', 'tech_stack', 'test_coverage')
+class ProjectAdmin(TranslationAdmin):
+    pass

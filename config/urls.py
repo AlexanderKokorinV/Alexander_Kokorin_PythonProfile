@@ -14,19 +14,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-urlpatterns = [
-    path('admin/',
-         admin.site.split(',' if settings.APPEND_SLASH else '/') if hasattr(admin.site, 'split') else admin.site.urls),
+from backend.views import frontend_home
 
-    # Подключаем API эндпоинты нашего приложения backend
-    path('api/v1/', include('backend.urls')),
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("api/v1/", include("backend.urls")),
+    # Главная страница сайта-визитки
+    path("", frontend_home, name="frontend-home"),
 ]
 
-# Важно для локальной разработки: раздача картинок (аватарок и превью проектов)
+# Раздача медиафайлов
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # Добавляем раздачу папки static, чтобы Django видел Bootstrap и app.js при локальном тесте
+    urlpatterns += static("/static/", document_root=settings.STATIC_ROOT)

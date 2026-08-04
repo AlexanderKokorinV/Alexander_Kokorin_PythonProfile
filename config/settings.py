@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
+
 import os
 from pathlib import Path
-
+from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
@@ -35,17 +36,16 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    "modeltranslation",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     # Сторонние библиотеки
     "corsheaders",
     "rest_framework",
-
     # Приложение
     "backend",
 ]
@@ -65,10 +65,11 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR)],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
+                "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
@@ -82,6 +83,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+
 
 DATABASES = {
     "default": {
@@ -143,3 +145,25 @@ MEDIA_URL = "/media/"
 
 # Папка на диске, куда физически будут сохраняться загруженные файлы
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# Настройки Celery
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://profile_redis:6379/0")
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+
+# Доверенные источники для прохождения CSRF-защиты (вход в админку Django)
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8081",
+    "http://127.0.0.1:8081",
+    "http://alexander-python-backend-fastapi.ru",
+    "https://alexander-python-backend-fastapi.ru",
+]
+
+LANGUAGES = [
+    ("ru", _("Russian")),
+    ("en", _("English")),
+]
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = "ru"
+MODELTRANSLATION_FALLBACK_LANGUAGES = ("ru",)

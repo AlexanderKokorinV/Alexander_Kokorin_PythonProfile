@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "Twemoji Country Flags";
+  /* Подсказываем браузеру искать шрифт в нашей папке fonts на уровень выше */
+  src: url("../fonts/TwemojiCountryFlags.woff2") format("woff2");
+}
+
+/* Применяем этот шрифт строго к нашей иконке флага */
+#lang-flag {
+  font-family: "Twemoji Country Flags", "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+  font-size: 1.1rem;
+  display: inline-block;
+}
