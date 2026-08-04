@@ -38,17 +38,23 @@ class SkillListAPIView(APIView):
 class ProjectListAPIView(APIView):
     """Эндпоинт для получения списка проектов портфолио"""
 
-    def get(self, request):
-        # 1. Читаем параметр ?lang= из URL. Если его нет, по умолчанию берем 'ru' (или 'en')
-        lang = request.query_params.get('lang', 'ru')
+    def initialize_request(self, request, *args, **kwargs):
+        # Этот метод срабатывает ДО того, как Django начнет читать базу данных
+        init_request = super().initialize_request(request, *args, **kwargs)
 
-        # 2. Принудительно включаем нужный язык для текущего потока запроса
+        # Читаем язык из query-параметра ?lang=
+        lang = init_request.query_params.get('lang', 'ru')
+
+        # Жестко включаем язык для текущего запроса
         translation.activate(lang)
+        return init_request
 
-        # 3. Делаем запрос к БД (библиотека перевода подменит поля на лету)
+    def get(self, request):
+
+        # Делаем запрос к БД (библиотека перевода подменит поля на лету)
         projects = Project.objects.all().order_by("id")  # Сначала новые проекты
 
-        # 4. Сериализуем данные
+        # Сериализуем данные
         serializer = ProjectSerializer(
             projects, many=True, context={"request": request}
         )

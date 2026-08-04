@@ -130,7 +130,7 @@ function updateLangButton() {
 // Загрузка профиля (Блок "Обо мне" и "Главная")
 async function loadProfile(currentLang = 'ru') {
     try {
-        const response = await fetch('/api/v1/profile/');
+        const response = await fetch(`/api/v1/profile/?lang=${currentLang}`);
         if (!response.ok) throw new Error('Ошибка загрузки профиля');
 
         const data = await response.json();
@@ -167,7 +167,7 @@ async function loadProfile(currentLang = 'ru') {
 // Загрузка и рендеринг навыков (Прогресс-бары)
 async function loadSkills(currentLang = 'ru') {
     try {
-        const response = await fetch('/api/v1/skills/');
+        const response = await fetch(`/api/v1/skills/?lang=${currentLang}`);
         if (!response.ok) throw new Error('Ошибка загрузки навыков');
 
         const skills = await response.json();
