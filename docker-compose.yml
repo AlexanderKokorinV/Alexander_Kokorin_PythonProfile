@@ -96,6 +96,9 @@ services:
       - media_data:/app/media:ro
     depends_on:
       - backend
+    networks:
+      - default
+      - web_network
 
 volumes:
   profile_postgres_data:
