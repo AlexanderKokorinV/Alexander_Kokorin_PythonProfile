@@ -69,9 +69,9 @@ document.addEventListener("DOMContentLoaded", () => {
     translateUI(); // Вызываем перевод интерфейса при старте
 
     // Передаем текущий язык во все функции при первой загрузке!
-    loadProfile(currentLang);
-    loadSkills(currentLang);
-    loadProjects(currentLang);
+    loadProfile();
+    loadSkills();
+    loadProjects();
 
     const langBtn = document.getElementById('lang-btn');
     if (langBtn) {
@@ -83,10 +83,10 @@ document.addEventListener("DOMContentLoaded", () => {
             updateLangButton();
             translateUI();
 
-            // Перезагружаем данные из API, передавая новый язык
-            loadProfile(currentLang);
-            loadSkills(currentLang);
-            loadProjects(currentLang);
+            // Перезагружаем данные из API
+            loadProfile();
+            loadSkills();
+            loadProjects();
         });
     }
 });
@@ -200,18 +200,26 @@ async function loadSkills(currentLang = 'ru') {
 // Загрузка и рендеринг карточек проектов
 async function loadProjects(currentLang = 'ru') {
     try {
-        const response = await fetch('/api/v1/projects/');
+        // 1. Делаем запрос к API с параметром языка
+        const response = await fetch(`/api/v1/projects/?lang=${currentLang}`);
+
+        // 2. Если сервер ответил ошибкой, выбрасываем исключение
         if (!response.ok) throw new Error('Ошибка загрузки проектов');
 
+        // 3. Читаем JSON-данные ОДИН раз в переменную projects
         const projects = await response.json();
+
+        // 4. Поиск контейнера на странице
         const container = document.getElementById('projects-container');
         if (!container) return;
-        container.innerHTML = ''; // Очищаем текст "Загрузка..."
+
+        // Очищаем текст "Загрузка..."
+        container.innerHTML = '';
 
         projects.forEach(project => {
             // Поддержка мультиязычности для описания и заголовков проектов (если настроено в Django)
-            const projectTitle = project[`title_${currentLang}`] || project.title;
-            const projectDesc = project[`description_${currentLang}`] || project.description;
+            const projectTitle = project.title;
+            const projectDesc = project.description;
 
             // Генерируем элементы списка для "Что было сделано"
             const featuresHtml = project.features_list ? project.features_list.map(feature => `<li>${feature}</li>`).join('') : '';

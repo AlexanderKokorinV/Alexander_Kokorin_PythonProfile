@@ -2,6 +2,7 @@ import os
 
 from django.conf import settings
 from django.shortcuts import render
+from django.utils import translation
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -38,7 +39,16 @@ class ProjectListAPIView(APIView):
     """Эндпоинт для получения списка проектов портфолио"""
 
     def get(self, request):
+        # 1. Читаем параметр ?lang= из URL. Если его нет, по умолчанию берем 'ru' (или 'en')
+        lang = request.query_params.get('lang', 'ru')
+
+        # 2. Принудительно включаем нужный язык для текущего потока запроса
+        translation.activate(lang)
+
+        # 3. Делаем запрос к БД (библиотека перевода подменит поля на лету)
         projects = Project.objects.all().order_by("id")  # Сначала новые проекты
+
+        # 4. Сериализуем данные
         serializer = ProjectSerializer(
             projects, many=True, context={"request": request}
         )
