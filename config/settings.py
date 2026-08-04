@@ -30,7 +30,12 @@ SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-temporary-build-key-12345"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['alexander-python-backend-fastapi.ru', 'www.alexander-python-backend-fastapi.ru', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    "alexander-python-backend-fastapi.ru",
+    "www.alexander-python-backend-fastapi.ru",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -174,4 +179,3 @@ LANGUAGES = [
 
 MODELTRANSLATION_DEFAULT_LANGUAGE = "ru"
 MODELTRANSLATION_FALLBACK_LANGUAGES = ("ru",)
-

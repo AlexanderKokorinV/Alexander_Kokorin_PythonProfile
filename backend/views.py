@@ -43,7 +43,7 @@ class ProjectListAPIView(APIView):
         init_request = super().initialize_request(request, *args, **kwargs)
 
         # Читаем язык из query-параметра ?lang=
-        lang = init_request.query_params.get('lang', 'ru')
+        lang = init_request.query_params.get("lang", "ru")
 
         # Жестко включаем язык для текущего запроса
         translation.activate(lang)
