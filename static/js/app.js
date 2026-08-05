@@ -248,8 +248,17 @@ async function loadProjects(lang = 'ru') {
             const projectId = `project-${String(rawId).replace(/[^a-zA-Z0-9_-]/g, '') || 'untitled'}`;
 
             // 1. Безопасная обработка URL картинки:
-            // Регулярное выражение удаляет http(s):// и любой домен/порт, оставляя путь от корня
-            let imgUrl = '/static/images/default-project.png'; // Дефолтная заглушка
+            // Регулярное выражение удаляет http(s):// и любой домен/порт, оставляя путь от корня.
+            // Если картинки нет — показываем нейтральную SVG-заглушку (не требует файла).
+            const placeholderSvg =
+                'data:image/svg+xml;charset=utf-8,' +
+                encodeURIComponent(
+                    '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450">' +
+                    '<rect width="800" height="450" fill="#e9ecef"/>' +
+                    '<text x="400" y="230" font-family="Arial" font-size="28" fill="#adb5bd" text-anchor="middle">No Image</text>' +
+                    '</svg>'
+                );
+            let imgUrl = placeholderSvg;
             if (project.image) {
                 imgUrl = project.image.replace(/^https?:\/\/[^\/]+/, '');
             }
