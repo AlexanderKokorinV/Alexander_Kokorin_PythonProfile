@@ -15,31 +15,37 @@
     text-align: center;
     padding: 0 !important;       /* Убираем лишние внутренние отступы Bootstrap */
     margin: 0 !important;        /* Убираем внешние отступы */
+}
 
-    /* Делаем имя Александр ярко-белым */
-    #hero h1 {
-        color: #ffffff !important;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Добавим легкую тень, чтобы текст еще лучше читался на фоне неба */
-    }
+/* Делаем имя Александр ярко-белым */
+#hero h1 {
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Добавим легкую тень, чтобы текст еще лучше читался на фоне неба */
+}
 
-    /* Делаем надпись Python-разработчик бело-серебристой */
-    #hero p {
-        color: #f8f9fa !important;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-    }
-    #lang-flag {
-        /* Подключаем скачанный шрифт специально для этого элемента */
-        font-family: "Twemoji Country Flags", "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
-        font-size: 1.1rem; /* Слегка увеличим размер, чтобы флаг смотрелся аккуратно */
-    }
+/* Делаем надпись Python-разработчик бело-серебристой */
+#hero p {
+    color: #f8f9fa !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
 
-    /* Изначально задаем иконке плавность анимации */
-    .card-body button .bi-chevron-down {
-        transition: transform 0.2s ease-in-out !important;
-    }
+#lang-flag {
+    /* Подключаем скачанный шрифт специально для этого элемента */
+    font-family: "Twemoji Country Flags", "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+    font-size: 1.1rem; /* Слегка увеличим размер, чтобы флаг смотрелся аккуратно */
+}
 
-    /* Находим кнопку, которая стоит прямо перед РАСКРЫТЫМ блоком .collapse.show, и переворачиваем в ней стрелочку */
-    .card-body div:has(+ .collapse.show) button .bi-chevron-down {
-        transform: rotate(180deg) !important;
-    }
+/* Сохраняем переносы строк из поля "Обо мне" (абзацы из админки не сливаются) */
+#about-text {
+    white-space: pre-line;
+}
+
+/* Изначально задаем иконке плавность анимации */
+.card-body button .bi-chevron-down {
+    transition: transform 0.2s ease-in-out !important;
+}
+
+/* Находим кнопку, которая стоит прямо перед РАСКРЫТЫМ блоком .collapse.show, и переворачиваем в ней стрелочку */
+.card-body div:has(+ .collapse.show) button .bi-chevron-down {
+    transform: rotate(180deg) !important;
 }

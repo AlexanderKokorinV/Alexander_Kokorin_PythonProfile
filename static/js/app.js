@@ -267,6 +267,11 @@ async function loadProjects(lang = 'ru') {
             const title = escapeHTML(project.title || 'Без названия');
             const description = escapeHTML(project.description || '');
             const techStack = escapeHTML(project.tech_stack || '');
+            const techChips = (project.tech_stack || '')
+                .split(',')
+                .filter(t => t.trim())
+                .map(t => `<span class="badge bg-secondary me-1">${escapeHTML(t.trim())}</span>`)
+                .join(' ');
 
             // Покрытие тестами: показываем только если есть значение
             const coverageHtml = project.test_coverage
@@ -292,7 +297,7 @@ async function loadProjects(lang = 'ru') {
                     <div class="card-body">
                         <h5 class="card-title fw-bold">${title}</h5>
                         <p class="card-text text-muted">${description}</p>
-                        <p class="mb-2"><strong>${translations[currentLang]['project-stack']}</strong> <span class="badge bg-secondary">${techStack}</span></p>
+                        <div class="mb-2"><strong>${translations[currentLang]['project-stack']}</strong><br><span class="d-flex flex-wrap gap-1">${techChips}</span></div>
                         <p class="mb-3"><a href="${githubUrl}" target="_blank" class="btn btn-outline-dark btn-sm"><i class="bi bi-github me-2"></i>${translations[currentLang]['project-code-btn']}</a></p>
 
                         <button class="btn btn-link btn-sm p-0 text-decoration-none fw-bold text-primary d-flex align-items-center collapsed"
