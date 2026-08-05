@@ -6,9 +6,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 # 3. Создание jobs:
 jobs:
@@ -25,7 +22,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-node-version: "3.12"
+          python-version: "3.12"
       # Шаг 3. Устанавливаем Poetry:
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -56,7 +53,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-node-version: "3.12"
+          python-version: "3.12"
       # Шаг 3. Установка системных зависимостей для сборки psycopg3 из исходников
       - name: Install System Dependencies for PostgreSQL
         run: |
@@ -106,23 +103,9 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # 1. Проверяем папку (ИСПРАВЛЕНО: убран лишний пробел после слэша)
-            if [ ! -d "$HOME/Alexander_Kokorin_PythonProfile/.git" ]; then
-              rm -rf "$HOME/Alexander_Kokorin_PythonProfile"
-            fi
-            
-            # 2. Создаем чистую директорию проекта и переходим в нее
-            mkdir -p "$HOME/Alexander_Kokorin_PythonProfile"
+            # 1. Код уже скопирован шагом "Copy files via SSH" (scp-action) выше,
+            #    поэтому git-клонирование не требуется (ранее падало из-за битого URL репозитория).
             cd "$HOME/Alexander_Kokorin_PythonProfile"
-            
-            # 3. Скачиваем или обновляем код (ИСПРАВЛЕНО: убраны пробелы в путях и ссылках)
-            if [ -d ".git" ]; then
-              git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@://github.com"
-              git fetch --all
-              git reset --hard origin/main
-            else
-              git clone "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@://github.com" .
-            fi
             
             # 4. Записываем весь файл .env из ваших секретов GitHub
             cat << 'EOF' > .env
