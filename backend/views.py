@@ -36,7 +36,8 @@ class ProfileAPIView(APIView):
             serializer = ProfileSerializer(
                 profile, context={"request": request, "lang": lang}
             )
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            data = serializer.data  # .data выполняет сериализацию — он должен быть ВНУТРИ override
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class SkillListAPIView(APIView):
@@ -50,7 +51,8 @@ class SkillListAPIView(APIView):
             serializer = SkillSerializer(
                 skills, many=True, context={"request": request, "lang": lang}
             )
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            data = serializer.data  # сериализация выполняется на этой строке — поэтому внутри override
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class ProjectListAPIView(APIView):
@@ -65,7 +67,8 @@ class ProjectListAPIView(APIView):
             serializer = ProjectSerializer(
                 projects, many=True, context={"request": request, "lang": lang}
             )
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            data = serializer.data  # сериализация выполняется на этой строке — поэтому внутри override
+        return Response(data, status=status.HTTP_200_OK)
 
 
 def frontend_home(request):
