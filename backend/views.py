@@ -59,7 +59,7 @@ class ProjectListAPIView(APIView):
     def get(self, request):
         lang = get_lang(request)
         # Сначала новые проекты
-        projects = Project.objects.all().order_by("-id")
+        projects = Project.objects.all().order_by("id")
 
         with translation.override(lang):
             serializer = ProjectSerializer(
