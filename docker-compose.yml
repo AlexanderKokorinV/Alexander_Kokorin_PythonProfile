@@ -86,7 +86,8 @@ services:
     image: nginx:stable-alpine
     restart: always
     ports:
-      - "80:80" # Занимаем стандартный порт
+      - "80:80" # стандартный порт
+      - "443:443"
     volumes:
       - ./frontend:/usr/share/nginx/html
       # Монтируем локальный Bootstrap в отдельную изолированную папку фронтенда для Nginx
