@@ -296,7 +296,7 @@ async function loadProjects(lang = 'ru') {
                     <img src="${escapeHTML(imgUrl)}" class="card-img-top" alt="${title}" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="card-title fw-bold">${title}</h5>
-                        <p class="card-text text-muted">${description}</p>
+                        <p class="card-text text-muted project-description">${description}</p>
                         <div class="mb-2"><strong>${translations[currentLang]['project-stack']}</strong><br><span class="d-flex flex-wrap gap-1">${techChips}</span></div>
                         <p class="mb-3"><a href="${githubUrl}" target="_blank" class="btn btn-outline-dark btn-sm"><i class="bi bi-github me-2"></i>${translations[currentLang]['project-code-btn']}</a></p>
 

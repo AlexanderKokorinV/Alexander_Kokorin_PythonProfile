@@ -40,6 +40,11 @@
     white-space: pre-line;
 }
 
+/* Сохраняем переносы строк в описании проекта (раздел "Что было сделано") */
+.project-description {
+    white-space: pre-line;
+}
+
 /* Изначально задаем иконке плавность анимации */
 .card-body button .bi-chevron-down {
     transition: transform 0.2s ease-in-out !important;
