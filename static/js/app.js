@@ -277,13 +277,13 @@ async function loadProjects(lang = 'ru') {
 
             // Собираем шаблон (переменные подставляются уже экранированными)
             const projectCard = `
-                <div class="card mb-4 shadow-sm">
+                <div class="card mb-4 shadow-sm position-relative overflow-hidden">
+                    ${coverageHtml}
                     <div class="card-body">
                         <h5 class="card-title fw-bold">${title}</h5>
                         <p class="card-text text-muted">${description}</p>
-                        <p class="mb-2"><strong>Стек:</strong> <span class="badge bg-secondary">${techStack}</span></p>
-                        <p class="mb-3"><strong>Покрытие тестами:</strong> ${testCoverage}%</p>
-                        <p class="mb-3"><a href="${githubUrl}" target="_blank" class="btn btn-outline-dark btn-sm">GitHub</a></p>
+                        <p class="mb-2"><strong>${translations[currentLang]['project-stack']}</strong> <span class="badge bg-secondary">${techStack}</span></p>
+                        <p class="mb-3"><a href="${githubUrl}" target="_blank" class="btn btn-outline-dark btn-sm"><i class="bi bi-github me-2"></i>${translations[currentLang]['project-code-btn']}</a></p>
 
                         <button class="btn btn-link btn-sm p-0 text-decoration-none fw-bold text-primary d-flex align-items-center collapsed"
                                 type="button"
@@ -291,7 +291,7 @@ async function loadProjects(lang = 'ru') {
                                 data-bs-target="#${projectId}"
                                 aria-expanded="false"
                                 aria-controls="${projectId}">
-                            <i class="bi bi-chevron-down me-1"></i> Что реализовано:
+                            <i class="bi bi-chevron-down me-1"></i> ${translations[currentLang]['project-features']}
                         </button>
 
                         <div class="collapse mt-2" id="${projectId}">
