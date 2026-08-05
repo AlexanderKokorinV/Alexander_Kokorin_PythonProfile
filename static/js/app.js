@@ -288,6 +288,7 @@ async function loadProjects(lang = 'ru') {
             const projectCard = `
                 <div class="card mb-4 shadow-sm position-relative overflow-hidden">
                     ${coverageHtml}
+                    <img src="${escapeHTML(imgUrl)}" class="card-img-top" alt="${title}" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="card-title fw-bold">${title}</h5>
                         <p class="card-text text-muted">${description}</p>
