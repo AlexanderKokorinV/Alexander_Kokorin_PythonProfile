@@ -1,3 +1,5 @@
+name: kokorin_profile
+
 services:
   # 1. СУБД PostgreSQL (Использует psycopg3 на стороне бэкенда)
   profile_db:
