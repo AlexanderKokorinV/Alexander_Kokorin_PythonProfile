@@ -211,3 +211,6 @@ backend_static/
 # Git metadata
 .git/
 .github/
+
+profile_data.json
+data.json

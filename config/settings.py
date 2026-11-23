@@ -38,6 +38,7 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 ALLOWED_HOSTS = [
     "alexander-python-backend-fastapi.ru",
     "www.alexander-python-backend-fastapi.ru",
+    "sandercore.pythonanywhere.com",
     "localhost",
     "127.0.0.1",
 ]
@@ -96,11 +97,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-if os.getenv("DJ_TEST_USE_SQLITE") == "True":
+if os.getenv("DJ_TEST_USE_SQLITE") == "True" or os.getenv("DB_ENGINE") == "sqlite":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": ":memory:",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 else:
@@ -180,6 +181,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8081",
     "http://alexander-python-backend-fastapi.ru",
     "https://alexander-python-backend-fastapi.ru",
+    "https://sandercore.pythonanywhere.com",
 ]
 
 LANGUAGES = [
