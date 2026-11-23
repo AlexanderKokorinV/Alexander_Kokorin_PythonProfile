@@ -260,7 +260,7 @@ async function loadProjects(lang = 'ru') {
                 );
             let imgUrl = placeholderSvg;
             if (project.image) {
-                imgUrl = project.image.replace(/^https?:\/\/[^\/]+/, '');
+                imgUrl = project.image;
             }
 
             // 2. Безопасное экранирование всех текстовых полей от XSS (Пункт 4)

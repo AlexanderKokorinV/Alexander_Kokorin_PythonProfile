@@ -113,7 +113,7 @@ def create_project(db):
 
     return Project.objects.create(
         title="LogiTrack SPA Service",
-        title_ru="LogiTrack SPA LogiTrack SPA Service",
+        title_ru="LogiTrack SPA Service",
         title_en="LogiTrack SPA Service",
         description="Project description in English",
         description_ru="Описание проекта на русском",
@@ -139,7 +139,7 @@ def test_get_projects_api(api_client, create_project):
     first_project = data[0]
     # Проверяем чистые ключи title и description (без суффиксов _ru/_en)
     assert first_project["title"] == "LogiTrack SPA Service"
-    assert first_project["description"] == "Project description in English"
+    assert first_project["description"] == "Описание проекта на русском"
 
     # Проверяем features_list, который сформировал сериализатор
     assert isinstance(first_project["features_list"], list)

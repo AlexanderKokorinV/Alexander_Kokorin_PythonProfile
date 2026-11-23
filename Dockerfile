@@ -31,10 +31,10 @@ RUN poetry install --only main
 COPY . .
 
 # 8. Сборка статических файлов для раздачи через Nginx
-RUN python manage.py collectstatic --noinput
+RUN SECRET_KEY=build-only-placeholder python manage.py collectstatic --noinput
 
 # 9. Открытие сетевого порта для веб-сервера внутри сети Docker
-EXPOSE 8000
+EXPOSE 10000
 
 # 10. Запуск через Gunicorn
-CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]
+CMD ["sh", "-c", "gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-10000} --workers 1"]

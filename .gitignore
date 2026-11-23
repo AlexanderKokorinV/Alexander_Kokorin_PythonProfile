@@ -192,3 +192,22 @@ cython_debug/
 
 *.pyc
 media/
+
+# Local database and media backups
+PythonProfile_backup.dump
+backend_static_backup.tar.gz
+media_backup.tar.gz
+
+# Environment variables and local secrets
+.env.*
+!.env.example
+
+# Local development files
+.vscode/
+
+# Collected Django static files
+backend_static/
+
+# Git metadata
+.git/
+.github/
